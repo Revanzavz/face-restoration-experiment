@@ -1,0 +1,28 @@
+# ============================================================================
+# Dependensi tambahan untuk modul Face Detection + Region-aware Restoration.
+# Install DI ATAS environment project Old-Photo-Restoration yang sudah ada
+# (torch / torchvision / opencv / pillow / numpy sudah terpasang dari sana).
+#
+#   pip install -r requirements_face.txt
+#
+# CATATAN KOMPATIBILITAS PENTING (torchvision >= 0.17, termasuk 0.22 di project):
+#   basicsr/gfpgan mengimpor `torchvision.transforms.functional_tensor` yang
+#   sudah DIHAPUS di torchvision baru -> akan error saat import.
+#   Perbaikan: jalankan scripts/patch_basicsr.py SEKALI setelah install,
+#   atau edit manual baris import di file basicsr/data/degradations.py:
+#       from torchvision.transforms.functional_tensor import rgb_to_grayscale
+#     menjadi:
+#       from torchvision.transforms.functional import rgb_to_grayscale
+# ============================================================================
+
+facexlib>=0.3.0          # RetinaFace (deteksi) + BiSeNet (face parsing/segmentasi)
+gfpgan>=1.3.8            # arsitektur & inferensi GFPGAN
+basicsr>=1.4.2           # backbone arch (dipakai gfpgan & codeformer)
+codeformer-pip>=0.0.4    # arsitektur CodeFormer siap pip (alternatif clone repo)
+lpips>=0.1.4             # metrik perceptual (evaluasi full-reference)
+scikit-image>=0.21.0     # SSIM
+matplotlib>=3.7.0        # grid visualisasi di notebook
+tqdm>=4.65.0             # progress bar evaluasi batch
+
+# Opsional -- hanya jika ingin membandingkan detektor MTCNN:
+# facenet-pytorch>=2.5.3
